@@ -24,9 +24,10 @@ const fetchRecipes = (req, res, response) => {
                 difficulty = difficulty.replace(/\s+/g, ' ').trim();
             }
 
-            url = $(e).find('a').attr('href');
+            url = $(e).find('.stretched-link').attr('href');
             href = url.split('/');
             key = href[4];
+            console.log(key);
 
             recipe_list.push({
                 title: title,
