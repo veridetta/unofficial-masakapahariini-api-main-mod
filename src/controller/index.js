@@ -227,20 +227,18 @@ const Controller = {
             const elementIngredients = $('._recipe-ingredients');
             const elementTutorial = $('._recipe-steps');
             title = elementHeader.find('._section-title').text();
+            title = title.replace(/\s+/g, ' ').trim();
             thumb = elementHeader.find('.lazyloaded').attr('data-src');
             if (thumb === undefined) {
                 thumb = null;
             }
-            user = elementHeader.find('.author').first().text();
-            user = user.replace(/\s+/g, ' ').trim();
-            datePublished = elementHeader.find('.author').eq(1).text();
-            datePublished = datePublished.replace(/\s+/g, ' ').trim();
-
-            elementHeader.find('.recipe-info').each((i, e) => {
-                metaDuration = $(e).find('.icon-clock').next().text();
-                metaServings = $(e).find('.icon_fire').text();
+            const parts = elementHeader.find('.author').text().replace(/\s+/g, ' ').trim().split('|');
+            user = parts[0];
+            datePublished = parts[1];
+            metaDuration = elementHeader.find('.icon-clock').next().text();
+                metaServings = elementHeader.find('.icon_fire').text();
                 metaServings = metaServings.replace(/\s+/g, ' ').trim();
-                metaDificulty = $(e).find('.icon_difficulty').text();
+                metaDificulty = elementHeader.find('.icon_difficulty').text();
                 metaDificulty = metaDificulty.replace(/\s+/g, ' ').trim();
                 if (metaDuration.includes('\n') && metaServings.includes('\n') && metaDificulty.includes('\n')) {
                     parseDuration = metaDuration.split('\n')[1].split(' ');
@@ -266,7 +264,7 @@ const Controller = {
                 object.times = duration;
                 object.difficulty = difficulty;
                 object.author = { user, datePublished };
-            });
+                console.log(object);
 
             elementDesc.each((i, e) => {
                 desc = $(e).find('p').text();
